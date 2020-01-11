@@ -43,6 +43,18 @@ ball.shape("circle")
 ball.color("white")
 ball.penup()
 
+
+# Pen --------------------------------------------
+score_A = 0
+score_B = 0
+score = turtle.Turtle()
+score.speed(0)
+score.color("white")
+score.penup()
+score.hideturtle()
+score.goto(0, 260)
+score.write("Player A: {}  Player B: {}".format(score_A, score_B), align="center", font=("Courier", 24, "normal"))
+
 # sets paddle to center starting position
 ball.goto(0, 0)
 
@@ -103,13 +115,22 @@ while True:
     if ball.xcor() > 390:
         ball.goto(0, 0)
         ball.dx *= -1
+        score_A += 1
+        score.clear()
+        score.write("Player A: {}  Player B: {}".format(score_A, score_B), align="center", font=("Courier", 24, "normal"))
 
     if ball.xcor() < -390:
         ball.goto(0, 0)
         ball.dx *= -1
+        score_B += 1
+        score.clear()
+        score.write("Player A: {}  Player B: {}".format(score_A, score_B), align="center",font=("Courier", 24, "normal"))
 
     # Paddle and ball collisions
     if (ball.xcor() > 340 and ball.xcor() < 350 ) and (ball.ycor() < pad_B.ycor() + 40 and ball.ycor() > pad_B.ycor() - 40):
-        ball.setx(340)
+        ball.setx(340)  # For right-side collision
         ball.dx *= -1
 
+    if (ball.xcor() < -340 and ball.xcor() > -350 ) and (ball.ycor() < pad_A.ycor() + 40 and ball.ycor() > pad_A.ycor() - 40):
+        ball.setx(-340)  # For left-side collision
+        ball.dx *= -1
